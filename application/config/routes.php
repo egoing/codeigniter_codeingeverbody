@@ -40,7 +40,9 @@
 
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
-
+$route['topic/(:num)'] = "topic/get/$1";
+$route['post/(:num)'] = "topic/get/$1";
+$route['topic/([a-z]+)/([a-z]+)/(\d+)'] = "$1/$2/$3";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
