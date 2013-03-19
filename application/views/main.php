@@ -1,3 +1,1 @@
-<div class="span10">
-	
-</div>
+토픽메인
