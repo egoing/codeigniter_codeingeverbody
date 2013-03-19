@@ -37,12 +37,12 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
-$route['default_controller'] = "welcome";
-$route['404_override'] = '';
 $route['topic/(:num)'] = "topic/get/$1";
 $route['post/(:num)'] = "topic/get/$1";
 $route['topic/([a-z]+)/([a-z]+)/(\d+)'] = "$1/$2/$3";
+$route['default_controller'] = "topic/index";
+$route['404_override'] = 'errors/notfound';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
