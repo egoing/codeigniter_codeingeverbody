@@ -2,7 +2,8 @@
 	<article>
 		<h1><?=$topic->title?></h1>
 		<div>
-			<?=$topic->description?>
+			<div><?=kdate($topic->created)?></div>
+			<?=auto_link($topic->description)?>
 		</div>
 	</article>
 </div>
