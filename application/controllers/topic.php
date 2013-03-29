@@ -5,6 +5,7 @@ class Topic extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->model('topic_model');
+        log_message('debug', 'topic 초기화');
     }
     function index(){        
         $this->_head();
@@ -14,12 +15,19 @@ class Topic extends CI_Controller {
         $this->load->view('footer');
     }
     function get($id){        
+        log_message('debug', 'get 호출');
         $this->_head();
 
         $topic = $this->topic_model->get($id);
-        $this->load->helper(array('url', 'HTML', 'korean'));
-        $this->load->view('get', array('topic'=>$topic));
+        if(empty($topic)){
+            log_message('error', 'topic의 값이 없습니다');       
+            show_error('topic의 값이 없습니다');
+        }
 
+        $this->load->helper(array('url', 'HTML', 'korean'));
+        log_message('debug', 'get view 로딩');
+        $this->load->view('get', array('topic'=>$topic));
+        log_message('debug', 'footer view 로딩');
         $this->load->view('footer');
     }
     function add(){

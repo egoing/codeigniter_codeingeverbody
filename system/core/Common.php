@@ -89,7 +89,7 @@ if ( ! function_exists('is_really_writable'))
 			}
 
 			fclose($fp);
-			@chmod($file, DIR_WRITE_MODE);
+			//@chmod($file, DIR_WRITE_MODE);
 			@unlink($file);
 			return TRUE;
 		}
