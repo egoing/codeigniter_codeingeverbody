@@ -9,6 +9,9 @@
 			    	body{
 			    		padding-top:60px;
 			    	}
+			    	.form_control{
+			    		padding-top:20px;
+			    	}
 			    </style>
 			    <link href="/static/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">			    
             </head>
