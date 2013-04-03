@@ -36,7 +36,8 @@
 				  </div>
 				</div>
 				<?php
-				if($this->config->item('is_dev')) {
+				if(false){
+				//if($this->config->item('is_dev')) {
 				?>
 				<div class="well span12">
 					개발환경을 수정 중입니다.
