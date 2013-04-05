@@ -1,22 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Topic extends CI_Controller {
+class Topic extends MY_Controller {
     function __construct()
     {       
         parent::__construct();
-        $this->load->database();
+        
         $this->load->model('topic_model');
         log_message('debug', 'topic 초기화');
     }
     function index(){        
         $this->_head();
+        $this->_sidebar();
 
         $this->load->view('main');
 
-        $this->load->view('footer');
+        $this->_footer();
     }
     function get($id){        
         log_message('debug', 'get 호출');
         $this->_head();
+        $this->_sidebar();
 
         $topic = $this->topic_model->get($id);
         if(empty($topic)){
@@ -28,7 +30,7 @@ class Topic extends CI_Controller {
         log_message('debug', 'get view 로딩');
         $this->load->view('get', array('topic'=>$topic));
         log_message('debug', 'footer view 로딩');
-        $this->load->view('footer');
+        $this->_footer();
     }
     function add(){
 
@@ -42,6 +44,7 @@ class Topic extends CI_Controller {
         }
 
         $this->_head();
+        $this->_sidebar();
         
         $this->load->library('form_validation');
 
@@ -59,7 +62,7 @@ class Topic extends CI_Controller {
             redirect('/topic/get/'.$topic_id);
         }
         
-        $this->load->view('footer');
+        $this->_footer();
     }
     function upload_receive_from_ck(){
         // 사용자가 업로드 한 파일을 /static/user/ 디렉토리에 저장한다.
@@ -117,14 +120,9 @@ class Topic extends CI_Controller {
     }
     function upload_form(){
         $this->_head();
+        $this->_sidebar();
         $this->load->view('upload_form');
-        $this->load->view('footer');
-    }
-    function _head(){
-        $this->load->config('opentutorials');
-        $this->load->view('head');
-        $topics = $this->topic_model->gets();
-        $this->load->view('topic_list', array('topics'=>$topics));
+        $this->_footer();
     }
 }
 ?>

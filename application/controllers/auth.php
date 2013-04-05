@@ -1,14 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
     function __construct()
     {       
         parent::__construct();    
-    }
+    }    
     function login(){
-    	$this->load->config('opentutorials');
-        $this->load->view('head');
-        $this->load->view('login');
-        $this->load->view('footer');
+    	$this->_head();
+        $this->load->view('login');     
+        $this->_footer();   
     }
 
     function logout(){
