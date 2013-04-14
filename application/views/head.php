@@ -50,6 +50,7 @@
 				        	} else {
 				        	?>
 				        		<li><a href="/index.php/auth/login">로그인</a></li>
+				        		<li><a href="/index.php/auth/register">회원가입</a></li>
 				        	<?php
 				        	}
 				        	?>
