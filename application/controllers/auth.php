@@ -6,7 +6,7 @@ class Auth extends MY_Controller {
     }    
     function login(){
     	$this->_head();
-        $this->load->view('login');     
+        $this->load->view('login', array('returnURL'=>$this->input->get('returnURL')));     
         $this->_footer();   
     }
 
@@ -62,9 +62,12 @@ class Auth extends MY_Controller {
     	) {
     		$this->session->set_userdata('is_login', true);
     		$this->load->helper('url');
-    		redirect("/");
+            $returnURL = $this->input->get('returnURL');
+            if($returnURL === false){
+                $returnURL = '/';
+            }
+            redirect($returnURL);
     	} else {
-    		echo "불일치";
     		$this->session->set_flashdata('message', '로그인에 실패 했습니다.');
     		$this->load->helper('url');
     		redirect('/auth/login');

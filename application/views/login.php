@@ -2,7 +2,7 @@
   <div class="modal-header">
     <h3>로그인</h3>
   </div>
-  <form class="form-horizontal" action="/index.php/auth/authentication" method="post">
+  <form class="form-horizontal" action="<?=site_url('/auth/authentication?returnURL='.rawurlencode($returnURL))?>" method="post">
     <div class="modal-body">
       
       
