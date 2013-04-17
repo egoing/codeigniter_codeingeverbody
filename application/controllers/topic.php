@@ -57,6 +57,21 @@ class Topic extends MY_Controller {
         else
         {
             $topic_id = $this->topic_model->add($this->input->post('title'), $this->input->post('description'));
+            // 메일전송
+            $this->load->model('user_model');
+            $users = $this->user_model->gets();
+
+            $this->load->library('email');
+            $this->email->initialize(array('mailtype'=>'html'));
+            foreach($users as $user){
+                $this->email->from('egoing@gmail.com', 'egoing');
+                xdebug_break();
+                $this->email->to($user->email);
+                $this->email->subject('새로운 글이 등록 되었습니다.');
+                $this->email->message('<a href="'.site_url('/topic/get/'.$topic_id).'">'.$this->input->post('title').'</a>'); 
+                $this->email->send();
+                // 메일기능 구현
+            }
             $this->load->helper('url');
             redirect('/topic/get/'.$topic_id);
         }
