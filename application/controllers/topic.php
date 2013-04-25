@@ -65,7 +65,6 @@ class Topic extends MY_Controller {
             $this->email->initialize(array('mailtype'=>'html'));
             foreach($users as $user){
                 $this->email->from('egoing@gmail.com', 'egoing');
-                xdebug_break();
                 $this->email->to($user->email);
                 $this->email->subject('새로운 글이 등록 되었습니다.');
                 $this->email->message('<a href="'.site_url('/topic/get/'.$topic_id).'">'.$this->input->post('title').'</a>'); 
