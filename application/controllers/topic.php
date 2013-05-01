@@ -33,23 +33,23 @@ class Topic extends MY_Controller {
         $this->_footer();
     }
     function add(){
-
+     
         // 로그인 필요
-
+     
         // 로그인이 되어 있지 않다면 로그인 페이지로 리다이렉션
         if(!$this->session->userdata('is_login')){
             $this->load->helper('url');
             redirect('/auth/login?returnURL='.rawurlencode(site_url('/topic/add')));
         }
-
+     
         $this->_head();
         $this->_sidebar();
-        
+         
         $this->load->library('form_validation');
-
+     
         $this->form_validation->set_rules('title', '제목', 'required');
         $this->form_validation->set_rules('description', '본문', 'required');
-        
+         
         if ($this->form_validation->run() == FALSE)
         {
              $this->load->view('add');
@@ -57,25 +57,15 @@ class Topic extends MY_Controller {
         else
         {
             $topic_id = $this->topic_model->add($this->input->post('title'), $this->input->post('description'));
-            // 메일전송
-            $this->load->model('user_model');
-            $users = $this->user_model->gets();
-
-            $this->load->library('email');
-            $this->email->initialize(array('mailtype'=>'html'));
-            foreach($users as $user){
-                $this->email->from('egoing@gmail.com', 'egoing');
-                xdebug_break();
-                $this->email->to($user->email);
-                $this->email->subject('새로운 글이 등록 되었습니다.');
-                $this->email->message('<a href="'.site_url('/topic/get/'.$topic_id).'">'.$this->input->post('title').'</a>'); 
-                $this->email->send();
-                // 메일기능 구현
-            }
+             
+            // Batch Queue에 notify_email_add_topic 추가
+            $this->load->model('batch_model');
+            $this->batch_model->add(array('job_name'=>'notify_email_add_topic', 'context'=>json_encode(array('topic_id'=>$topic_id))));
+     
             $this->load->helper('url');
             redirect('/topic/get/'.$topic_id);
         }
-        
+         
         $this->_footer();
     }
     function upload_receive_from_ck(){
