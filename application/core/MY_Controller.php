@@ -5,6 +5,8 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->database();
+        if(!$this->input->is_cli_request())
+            $this->load->library('session');
     }
     function _head(){
         $this->load->config('opentutorials');
