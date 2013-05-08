@@ -32,15 +32,20 @@ class Topic extends MY_Controller {
         log_message('debug', 'footer view 로딩');
         $this->_footer();
     }
+    function delete(){
+        $topic_id = $this->input->post('topic_id');
+        $this->_require_login(site_url('/topic/get/'.$topic_id));
+        $this->load->model('topic_model');
+        $this->topic_model->delete($topic_id);
+        $this->cache->delete('topics');
+        redirect('/');
+    }
     function add(){
      
         // 로그인 필요
      
         // 로그인이 되어 있지 않다면 로그인 페이지로 리다이렉션
-        if(!$this->session->userdata('is_login')){
-            $this->load->helper('url');
-            redirect('/auth/login?returnURL='.rawurlencode(site_url('/topic/add')));
-        }
+        $this->_require_login(site_url('/topic/add'));
      
         $this->_head();
         $this->_sidebar();
@@ -62,6 +67,8 @@ class Topic extends MY_Controller {
             $this->load->model('batch_model');
             $this->batch_model->add(array('job_name'=>'notify_email_add_topic', 'context'=>json_encode(array('topic_id'=>$topic_id))));
      
+            $this->cache->delete('topics');
+
             $this->load->helper('url');
             redirect('/topic/get/'.$topic_id);
         }
